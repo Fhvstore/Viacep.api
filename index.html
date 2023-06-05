@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+<h1>consulta viacep</h1>
+<label for="">Insira seu CEP:</label>
+
+<input type="number" id="cnpj">
+
+<div id="res">
+    <p>seu resultado: </p>
+</div>
+ 
+<button onclick="env()">enviar</button>
+
+</body>
+<script>
+    function env(){
+
+        let cep = document.getElementById("cep").value;
+        let url = `https://api-publica.speedio.com.br/buscarcnpj?cnpj=${cnpj}`
+
+        if(cep.length !== 8){
+            alert("CEP Invalido !!")
+            return;
+        }
+
+        fetch(url).then(function(response){
+            response.json().then(show)
+        
+        })
+
+    }
+    function show(dados){
+        let res = document.getElementById("res");
+        if(dados.err){
+            res.innerHTML="error ao consultar"
+        } else {
+        res.innerHTML = `
+        <p>estado: ${dados.uf}</p>
+        <p>endereço: ${dados.cep}</p>
+        <p>endereço: ${dados.localidade}</p>
+        
+    `}
+    }
+</script>
+</html>
